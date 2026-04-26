@@ -1,0 +1,18 @@
+# ===== Data files (sensitive survey responses) =====
+responses.csv
+cleaned_responses.csv
+multiple_answers_processed.csv
+tagged_free_text.csv
+
+# ===== Output charts =====
+output/
+
+# ===== Raw source file =====
+CI_CD Survey Output - Student.csv
+
+# ===== Jupyter Notebook checkpoints =====
+.ipynb_checkpoints/
+
+# ===== Python =====
+__pycache__/
+*.pyc
