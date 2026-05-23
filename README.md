@@ -40,7 +40,7 @@ Khi có dữ liệu mới từ Google Forms, hãy thực hiện các bước sau
      ```
 3. **Lấy kết quả**:
 
-   - Toàn bộ biểu đồ (Pie chart, Bar chart, Pareto, WordCloud và biểu đồ nâng cao) sẽ được tự động sinh ra và lưu vào thư mục `output/`.
+   - Toàn bộ biểu đồ (Pie chart, Bar chart, Pareto, phân tích chủ đề câu hỏi mở và biểu đồ nâng cao) sẽ được tự động sinh ra và lưu vào thư mục `output/`.
    - Các file dữ liệu trung gian (`.csv`) và báo cáo tổng hợp cũng được tạo ra để phục vụ việc kiểm tra chéo.
 
 ---
@@ -63,7 +63,7 @@ Dự án được module hóa thành 8 Notebook chạy tuần tự:
 
 - `2a_preliminary_analysis.ipynb`: Phân tích biến nhân khẩu học và câu hỏi lựa chọn đơn.
 - `2b_multiple_answer_analysis.ipynb`: Thống kê tần suất và vẽ đồ thị Pareto cho các câu hỏi nhiều lựa chọn.
-- `2c_free_text_analysis.ipynb`: Phân tích từ khóa (Top Keywords) và vẽ Mây từ vựng (WordCloud).
+- `2c_free_text_analysis.ipynb`: Phân tích định tính câu hỏi mở: lọc nhiễu, gán chủ đề, tổng hợp insight và trích dẫn tiêu biểu.
 - `3_advanced_analysis.ipynb`: Phân tích chéo nâng cao, ánh xạ **DORA Metrics** và kiểm định mô hình **UTAUT** (được mô tả chi tiết ở phần dưới).
 
 ---
@@ -97,4 +97,4 @@ Tệp notebook nâng cao [3_advanced_analysis.ipynb](3_advanced_analysis.ipynb) 
 ## Yêu cầu hệ thống
 
 - Python 3.10+
-- Thư viện: `pandas`, `matplotlib`, `seaborn`, `wordcloud`, `nbconvert`, `nbformat`.
+- Thư viện: `pandas`, `matplotlib`, `seaborn`, `nbconvert`, `nbformat`.
