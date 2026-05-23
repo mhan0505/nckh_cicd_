@@ -2,7 +2,7 @@
 # -*- coding: utf-8 -*-
 """
 ╔══════════════════════════════════════════════════════════════╗
-║           🎼 MASTER PIPELINE — "NHẠC TRƯỞNG"               ║
+║            MASTER PIPELINE — "NHẠC TRƯỞNG"               ║
 ║                                                              ║
 ║  Chạy tuần tự toàn bộ 3 tầng Data Pipeline:                 ║
 ║    Tầng 1  →  Data Ingestion                                 ║
@@ -40,7 +40,7 @@ PIPELINE = [
     {
         "tier": "TẦNG 1",
         "name": "Data Ingestion",
-        "icon": "📥",
+        "icon": "",
         "notebooks": [
             "notebooks/0_data_ingestion.ipynb",
         ],
@@ -51,7 +51,7 @@ PIPELINE = [
     {
         "tier": "TẦNG 2",
         "name": "Data Transformation / Cleaning",
-        "icon": "🧹",
+        "icon": "",
         "notebooks": [
             "notebooks/1a_cleanup.ipynb",
             "notebooks/1b_multiple_answer_cleanup.ipynb",
@@ -66,7 +66,7 @@ PIPELINE = [
     {
         "tier": "TẦNG 3",
         "name": "Data Analysis & Visualization",
-        "icon": "📊",
+        "icon": "",
         "notebooks": [
             "notebooks/2a_preliminary_analysis.ipynb",
             "notebooks/2b_multiple_answer_analysis.ipynb",
@@ -159,7 +159,7 @@ def execute_notebook(notebook_name, base_dir):
             
     except subprocess.TimeoutExpired:
         elapsed = time.time() - start_time
-        return False, elapsed, "⏰ TIMEOUT: Notebook chạy quá 20 phút!"
+        return False, elapsed, "TIMEOUT: TIMEOUT: Notebook chạy quá 20 phút!"
     except Exception as e:
         elapsed = time.time() - start_time
         return False, elapsed, f"Exception: {str(e)}"
@@ -194,12 +194,12 @@ def main():
     pipeline_start = time.time()
     now_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
     
-    print_header(f"🎼 MASTER PIPELINE — BẮT ĐẦU CHẠY  ({now_str})")
-    print(f"  📂 Working directory: {BASE_DIR}")
+    print_header(f" MASTER PIPELINE — BẮT ĐẦU CHẠY  ({now_str})")
+    print(f"   Working directory: {BASE_DIR}")
     
     total_notebooks = sum(len(tier["notebooks"]) for tier in PIPELINE)
-    print(f"  📓 Tổng notebooks: {total_notebooks}")
-    print(f"  🔄 Tổng tầng: {len(PIPELINE)}")
+    print(f"   Tổng notebooks: {total_notebooks}")
+    print(f"   Tổng tầng: {len(PIPELINE)}")
     
     # ── Tracking ──
     results = []          # [(notebook, success, elapsed)]
@@ -221,23 +221,23 @@ def main():
             current_nb += 1
             progress = f"[{current_nb}/{total_notebooks}]"
             
-            print_step("🔄", f"{progress} Đang chạy: {nb} ...")
+            print_step("", f"{progress} Đang chạy: {nb} ...")
             
             success, elapsed, error = execute_notebook(nb, BASE_DIR)
             results.append((nb, success, elapsed))
             
             if success:
-                print_step("✅", f"{progress} Thành công: {nb}  ({elapsed:.1f}s)")
+                print_step("[OK]", f"{progress} Thành công: {nb}  ({elapsed:.1f}s)")
             else:
-                print_step("❌", f"{progress} THẤT BẠI: {nb}  ({elapsed:.1f}s)")
+                print_step("[ERROR]", f"{progress} THẤT BẠI: {nb}  ({elapsed:.1f}s)")
                 print(f"\n{'!'*60}")
-                print(f"  🚨 LỖI TẠI: {nb}")
-                print(f"  📝 Chi tiết: {error}")
+                print(f"  [ERROR] LỖI TẠI: {nb}")
+                print(f"   Chi tiết: {error}")
                 print(f"{'!'*60}")
                 
                 # DỪNG PIPELINE NGAY LẬP TỨC
-                print(f"\n  🛑 PIPELINE DỪNG LẠI — Không chạy tiếp các notebook sau.")
-                print(f"  💡 Hãy mở {nb} trong Jupyter để debug lỗi, rồi chạy lại pipeline.")
+                print(f"\n  [STOP] PIPELINE DỪNG LẠI — Không chạy tiếp các notebook sau.")
+                print(f"  Note: Hãy mở {nb} trong Jupyter để debug lỗi, rồi chạy lại pipeline.")
                 
                 _print_summary(results, pipeline_start, success=False, stopped_at=nb)
                 sys.exit(1)
@@ -247,12 +247,12 @@ def main():
         missing = verify_outputs(expected, BASE_DIR)
         
         if missing:
-            print_step("⚠️", f"Thiếu output: {', '.join(missing)}")
-            print(f"\n  🛑 PIPELINE DỪNG — Output của {tier_name} không đầy đủ.")
+            print_step("[WARN]", f"Thiếu output: {', '.join(missing)}")
+            print(f"\n  [STOP] PIPELINE DỪNG — Output của {tier_name} không đầy đủ.")
             _print_summary(results, pipeline_start, success=False, stopped_at=tier_name)
             sys.exit(1)
         else:
-            print_step("✔️", f"{tier_name} hoàn tất ({tier_elapsed:.1f}s) — Output verified ✓")
+            print_step("[OK]", f"{tier_name} hoàn tất ({tier_elapsed:.1f}s) — Output verified OK")
     
     # ── Thành công toàn bộ ──
     _print_summary(results, pipeline_start, success=True)
@@ -263,16 +263,16 @@ def _print_summary(results, pipeline_start, success, stopped_at=None):
     
     total_elapsed = time.time() - pipeline_start
     
-    status = "✅ THÀNH CÔNG" if success else "❌ THẤT BẠI"
+    status = "[OK] THÀNH CÔNG" if success else "[ERROR] THẤT BẠI"
     
-    print_header(f"📋 BÁO CÁO PIPELINE — {status}")
+    print_header(f" BÁO CÁO PIPELINE — {status}")
     
     # Bảng kết quả
     print(f"\n  {'Notebook':<42} {'Trạng thái':<12} {'Thời gian':>10}")
     print(f"  {'─'*42} {'─'*12} {'─'*10}")
     
     for nb, ok, elapsed in results:
-        icon = "✅" if ok else "❌"
+        icon = "[OK]" if ok else "[ERROR]"
         status_text = "OK" if ok else "FAILED"
         print(f"  {nb:<42} {icon} {status_text:<9} {elapsed:>8.1f}s")
     
@@ -285,28 +285,28 @@ def _print_summary(results, pipeline_start, success, stopped_at=None):
     total_nb = sum(len(t["notebooks"]) for t in PIPELINE)
     n_skip = total_nb - len(results)
     
-    print(f"\n  📊 Thống kê:")
-    print(f"     ✅ Thành công:  {n_ok}")
-    print(f"     ❌ Thất bại:   {n_fail}")
+    print(f"\n   Thống kê:")
+    print(f"     [OK] Thành công:  {n_ok}")
+    print(f"     [ERROR] Thất bại:   {n_fail}")
     if n_skip > 0:
-        print(f"     ⏭️  Bỏ qua:    {n_skip}")
-    print(f"     ⏱️  Tổng time:  {total_elapsed:.1f}s ({total_elapsed/60:.1f} phút)")
+        print(f"     SKIP:  Bỏ qua:    {n_skip}")
+    print(f"       Tổng time:  {total_elapsed:.1f}s ({total_elapsed/60:.1f} phút)")
     
     if success:
         # Đếm biểu đồ output
         output_dir = BASE_DIR / "reports" / "figures"
         if output_dir.is_dir():
             charts = list(output_dir.glob("**/*.png"))
-            print(f"\n  🎨 Biểu đồ đã tạo: {len(charts)} file trong reports/figures/")
+            print(f"\n  Charts: Biểu đồ đã tạo: {len(charts)} file trong reports/figures/")
             for chart in sorted(charts):
                 size_kb = chart.stat().st_size / 1024
-                print(f"     📈 {chart.name} ({size_kb:.0f} KB)")
+                print(f"      {chart.name} ({size_kb:.0f} KB)")
         
-        print(f"\n  🎉 Pipeline hoàn tất thành công!")
+        print(f"\n  Done: Pipeline hoàn tất thành công!")
     else:
         if stopped_at:
-            print(f"\n  🛑 Dừng tại: {stopped_at}")
-        print(f"  💡 Sửa lỗi rồi chạy lại: python run_pipeline.py")
+            print(f"\n  [STOP] Dừng tại: {stopped_at}")
+        print(f"  Note: Sửa lỗi rồi chạy lại: python run_pipeline.py")
 
 
 # ══════════════════════════════════════════════════════════════

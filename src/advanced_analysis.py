@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
 ╔══════════════════════════════════════════════════════════════╗
-║             📊 ADVANCED GROUPING ANALYSIS SYSTEM             ║
+║              ADVANCED GROUPING ANALYSIS SYSTEM             ║
 ║                                                              ║
 ║  Thực hiện phân tích chéo, tích hợp DORA Metrics và UTAUT    ║
 ║  cho dữ liệu khảo sát CI/CD của sinh viên CNTT Việt Nam.     ║
@@ -54,12 +54,12 @@ OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 # ── ĐỌC DỮ LIỆU ──────────────────────────────────────────
 DATA_FILE = Path("processed/multiple_answers_processed.csv")
 if not DATA_FILE.exists():
-    print(f"❌ Không tìm thấy file {DATA_FILE}. Chạy tầng 1 và tầng 2 trước!")
+    print(f"[ERROR] Không tìm thấy file {DATA_FILE}. Chạy tầng 1 và tầng 2 trước!")
     sys.exit(1)
 
 df = pd.read_csv(DATA_FILE, encoding="utf-8-sig")
 N = len(df)
-print(f"🚀 Loaded {DATA_FILE}: {df.shape[0]} dòng x {df.shape[1]} cột")
+print(f" Loaded {DATA_FILE}: {df.shape[0]} dòng x {df.shape[1]} cột")
 
 # Thống kê nhanh nhóm có/chưa từng dùng CI/CD
 # Group "Đã dùng CI/CD" = Q7 không chứa "Chưa từng sử dụng..." và Q30_actual_usage >= 2 (hoặc đơn giản dựa vào Q7)
@@ -69,7 +69,7 @@ df["has_used_cicd"] = df["Q7_tools_used"].apply(
 
 n_used = df["has_used_cicd"].sum()
 n_unused = N - n_used
-print(f"📊 Phân loại sử dụng CI/CD: Đã dùng: {n_used} ({n_used/N*100:.1f}%) | Chưa dùng: {n_unused} ({n_unused/N*100:.1f}%)")
+print(f" Phân loại sử dụng CI/CD: Đã dùng: {n_used} ({n_used/N*100:.1f}%) | Chưa dùng: {n_unused} ({n_unused/N*100:.1f}%)")
 
 
 # ==============================================================================
@@ -134,7 +134,7 @@ def classify_dora(score):
 df["dora_class"] = df["dora_score"].apply(classify_dora)
 
 # Hướng 1: Phân loại Performer & so sánh tần suất sử dụng thực tế
-print("💡 Hướng 1: DORA Performance Classification")
+print("Note: Hướng 1: DORA Performance Classification")
 fig, ax = plt.subplots(figsize=(8, 5))
 dora_order = ["Low Performer", "Medium Performer", "High Performer", "Elite Performer"]
 dora_counts = df["dora_class"].value_counts().reindex(dora_order).fillna(0)
@@ -149,7 +149,7 @@ plt.savefig(OUTPUT_DIR / "adv_h1_dora_classification.png", dpi=150)
 plt.close()
 
 # Hướng 2: CI/CD adoption vs DORA score (So sánh DORA score của nhóm đã dùng vs chưa dùng)
-print("💡 Hướng 2: CI/CD adoption vs DORA score")
+print("Note: Hướng 2: CI/CD adoption vs DORA score")
 dora_t_stat, dora_p_val = stats.ttest_ind(
     df[df["has_used_cicd"] == 1]["dora_score"],
     df[df["has_used_cicd"] == 0]["dora_score"],
@@ -169,7 +169,7 @@ plt.savefig(OUTPUT_DIR / "adv_h2_cicd_vs_dora.png", dpi=150)
 plt.close()
 
 # Hướng 3: DORA score theo năm học / trường
-print("💡 Hướng 3: DORA score theo năm học / trường")
+print("Note: Hướng 3: DORA score theo năm học / trường")
 fig, axes = plt.subplots(1, 2, figsize=(14, 5.5))
 year_order = ["Năm 1", "Năm 2", "Năm 3", "Năm 4", "Năm 5 hoặc đã tốt nghiệp"]
 sns.barplot(data=df, x="Q2_year", y="dora_score", order=year_order, palette="Blues_d", errorbar="ci", ax=axes[0])
@@ -189,7 +189,7 @@ plt.savefig(OUTPUT_DIR / "adv_h3_dora_by_year_uni.png", dpi=150)
 plt.close()
 
 # Hướng 4: DORA vs Likert (Q15-Q32)
-print("💡 Hướng 4: DORA vs Likert benefits")
+print("Note: Hướng 4: DORA vs Likert benefits")
 # Lấy một số câu Likert đại diện cho cảm nhận về CI/CD
 likert_repr = {
     "Q15_save_time": "Tiết kiệm thời gian",
@@ -218,7 +218,7 @@ plt.close()
 print("\n--- Nhóm 2: Nhận thức & Thực hành ---")
 
 # Hướng 5: Phễu nhận thức theo năm học
-print("💡 Hướng 5: Phễu nhận thức theo năm học")
+print("Note: Hướng 5: Phễu nhận thức theo năm học")
 # Cross tabulate Q2_year vs Q5_cicd_awareness
 awareness_order = [
     "Chưa bao giờ nghe",
@@ -241,7 +241,7 @@ plt.savefig(OUTPUT_DIR / "adv_h5_awareness_funnel.png", dpi=150)
 plt.close()
 
 # Hướng 6: Knowing-Doing Gap
-print("💡 Hướng 6: Knowing-Doing Gap")
+print("Note: Hướng 6: Knowing-Doing Gap")
 # 3 trạng thái:
 # - Knowing: Q5_cicd_awareness >= "Biết khái niệm cơ bản" hoặc "Hiểu rõ..."
 # - Doing: has_used_cicd == 1 (đã từng dùng tool)
@@ -291,7 +291,7 @@ if barrier_cols_q39:
     plt.close()
 
 # Hướng 7: Mức tự động hóa vs công cụ đã dùng
-print("💡 Hướng 7: Mức tự động hóa vs công cụ đã dùng")
+print("Note: Hướng 7: Mức tự động hóa vs công cụ đã dùng")
 # Xem mối liên hệ giữa Q6_automation_level (mức tự động hóa) và các công cụ chính (GitHub Actions, GitLab CI/CD, Jenkins)
 auto_order = [
     "Hoàn toàn thủ công",
@@ -346,7 +346,7 @@ plt.close()
 print("\n--- Nhóm 3: Nguồn học & Hiệu quả ---")
 
 # Hướng 8: Nguồn học vs mức tự động hóa thực tế
-print("💡 Hướng 8: Nguồn học vs mức tự động hóa thực tế")
+print("Note: Hướng 8: Nguồn học vs mức tự động hóa thực tế")
 # Danh sách nguồn tiếp cận CI/CD chính
 sources = [
     "Môn học tại trường đại học",
@@ -381,7 +381,7 @@ plt.savefig(OUTPUT_DIR / "adv_h8_learning_vs_automation.png", dpi=150)
 plt.close()
 
 # Hướng 9: Nguồn học vs DORA score
-print("💡 Hướng 9: Nguồn học vs DORA score")
+print("Note: Hướng 9: Nguồn học vs DORA score")
 source_dora_data = []
 for sname in sources:
     subset = df[df["Q8_learning_source"].str.contains(sname, na=False, regex=False)]
@@ -406,7 +406,7 @@ plt.savefig(OUTPUT_DIR / "adv_h9_learning_vs_dora.png", dpi=150)
 plt.close()
 
 # Hướng 10: Nguồn học vs tự tin nghề nghiệp (Q17_job_confidence)
-print("💡 Hướng 10: Nguồn học vs tự tin nghề nghiệp")
+print("Note: Hướng 10: Nguồn học vs tự tin nghề nghiệp")
 source_conf_data = []
 for sname in sources:
     subset = df[df["Q8_learning_source"].str.contains(sname, na=False, regex=False)]
@@ -453,7 +453,7 @@ df["utaut_behavioral_intention"] = df[["Q27_intent_to_adopt", "Q28_self_learn_pl
 df["utaut_use_behavior"] = df[["Q30_actual_usage", "Q31_regular_usage", "Q32_proactive_setup"]].mean(axis=1)
 
 # Hướng 11: Self-efficacy -> Actual use
-print("💡 Hướng 11: Self-efficacy -> Actual use")
+print("Note: Hướng 11: Self-efficacy -> Actual use")
 self_use_r, self_use_p = safe_pearsonr(df, "utaut_self_efficacy", "utaut_use_behavior")
 fig, ax = plt.subplots(figsize=(7, 5))
 sns.regplot(data=df, x="utaut_self_efficacy", y="utaut_use_behavior", scatter_kws={"alpha":0.5}, line_kws={"color":"red"}, ax=ax)
@@ -465,7 +465,7 @@ plt.savefig(OUTPUT_DIR / "adv_h11_self_efficacy_vs_use.png", dpi=150)
 plt.close()
 
 # Hướng 12: Social influence -> Intention
-print("💡 Hướng 12: Social influence -> Intention")
+print("Note: Hướng 12: Social influence -> Intention")
 social_intention_r, social_intention_p = safe_pearsonr(df, "utaut_social_influence", "utaut_behavioral_intention")
 fig, ax = plt.subplots(figsize=(7, 5))
 sns.regplot(data=df, x="utaut_social_influence", y="utaut_behavioral_intention", scatter_kws={"alpha":0.5}, line_kws={"color":"green"}, ax=ax)
@@ -477,7 +477,7 @@ plt.savefig(OUTPUT_DIR / "adv_h12_social_vs_intention.png", dpi=150)
 plt.close()
 
 # Hướng 13: Facilitating conditions -> Actual use
-print("💡 Hướng 13: Facilitating conditions -> Actual use")
+print("Note: Hướng 13: Facilitating conditions -> Actual use")
 support_use_r, support_use_p = safe_pearsonr(df, "utaut_facilitating_conditions", "utaut_use_behavior")
 fig, ax = plt.subplots(figsize=(7, 5))
 sns.regplot(data=df, x="utaut_facilitating_conditions", y="utaut_use_behavior", scatter_kws={"alpha":0.5}, line_kws={"color":"purple"}, ax=ax)
@@ -489,7 +489,7 @@ plt.savefig(OUTPUT_DIR / "adv_h13_support_vs_use.png", dpi=150)
 plt.close()
 
 # Hướng 14: Intention vs Actual use gap (Khoảng cách giữa Ý định và Hành động)
-print("💡 Hướng 14: Intention vs Actual use gap")
+print("Note: Hướng 14: Intention vs Actual use gap")
 # Tính gap = Ý định (Intention) - Sử dụng (Use Behavior)
 df["intention_use_gap"] = df["utaut_behavioral_intention"] - df["utaut_use_behavior"]
 
@@ -530,7 +530,7 @@ plt.close()
 print("\n--- Nhóm 5: Phân tích Rào cản & Đề xuất ---")
 
 # Hướng 15: Rào cản theo mức nhận thức
-print("💡 Hướng 15: Rào cản theo mức nhận thức")
+print("Note: Hướng 15: Rào cản theo mức nhận thức")
 # So sánh rào cản chính (Q34_adoption_barriers) giữa nhóm Nhận biết thấp (is_knowing == 0) và cao (is_knowing == 1)
 barrier_cols_q34 = [c for c in df.columns if c.startswith("Q34_adoption_barriers__")]
 if barrier_cols_q34:
@@ -556,7 +556,7 @@ if barrier_cols_q34:
     plt.close()
 
 # Hướng 16: Rào cản theo năm học
-print("💡 Hướng 16: Rào cản theo năm học")
+print("Note: Hướng 16: Rào cản theo năm học")
 # Biểu thị tần suất rào cản Q34 qua năm học dưới dạng Heatmap tỷ lệ (%)
 if barrier_cols_q34:
     barrier_year_data = []
@@ -578,7 +578,7 @@ if barrier_cols_q34:
     plt.close()
 
 # Hướng 17: Giai đoạn khó nhất của pipeline
-print("💡 Hướng 17: Giai đoạn khó nhất của pipeline")
+print("Note: Hướng 17: Giai đoạn khó nhất của pipeline")
 # Q33_cicd_difficulties dummy columns
 diff_cols = [c for c in df.columns if c.startswith("Q33_cicd_difficulties__")]
 if diff_cols:
@@ -599,7 +599,7 @@ if diff_cols:
     plt.close()
 
 # Hướng 18: Kỳ vọng vs thực tế
-print("💡 Hướng 18: Kỳ vọng vs thực tế")
+print("Note: Hướng 18: Kỳ vọng vs thực tế")
 # Kỳ vọng của nhóm CHƯA DÙNG (Q40_expected_benefit) vs Lợi ích thực tế cảm nhận của nhóm ĐÃ DÙNG (Q15_save_time, Q16_early_bug_detect, Q17_job_confidence)
 # Lấy tỉ lệ đồng ý/hoàn toàn đồng ý (Likert >= 4) của người đã dùng làm thước đo lợi ích thực tế
 real_save_time = (df[df["has_used_cicd"] == 1]["Q15_save_time"] >= 4).mean() * 100
@@ -649,7 +649,7 @@ if exp_cols_q40:
 print("\n--- Nhóm 6: Adoption Readiness ---")
 
 # Hướng 19: Adoption Readiness Index theo năm học
-print("💡 Hướng 19: Adoption Readiness Index theo năm học")
+print("Note: Hướng 19: Adoption Readiness Index theo năm học")
 # Adoption Readiness Index = utaut_behavioral_intention (ý định) hoặc tính riêng từ Q27-Q29
 df["adoption_readiness"] = df[["Q27_intent_to_adopt", "Q28_self_learn_plan", "Q29_prefer_cicd_projects"]].mean(axis=1)
 
@@ -664,7 +664,7 @@ plt.savefig(OUTPUT_DIR / "adv_h19_readiness_by_year.png", dpi=150)
 plt.close()
 
 # Hướng 20: Adoption Readiness vs điều kiện hỗ trợ
-print("💡 Hướng 20: Adoption Readiness vs điều kiện hỗ trợ")
+print("Note: Hướng 20: Adoption Readiness vs điều kiện hỗ trợ")
 support_readiness_r, support_readiness_p = safe_pearsonr(df, "utaut_facilitating_conditions", "adoption_readiness")
 fig, ax = plt.subplots(figsize=(7, 5))
 sns.regplot(data=df, x="utaut_facilitating_conditions", y="adoption_readiness", scatter_kws={"alpha":0.5}, line_kws={"color":"orange"}, ax=ax)
@@ -676,7 +676,7 @@ plt.savefig(OUTPUT_DIR / "adv_h20_readiness_vs_support.png", dpi=150)
 plt.close()
 
 # ── XUẤT FILE TỔNG HỢP REPORT THỐNG KÊ ────────────────────
-print("\n📝 Đang tạo tệp báo cáo tổng kết advanced_analysis_report.md...")
+print("\n Đang tạo tệp báo cáo tổng kết advanced_analysis_report.md...")
 report_path = Path("reports/ADVANCED_ANALYSIS_REPORT.md")
 report_path.parent.mkdir(parents=True, exist_ok=True)
 
@@ -687,14 +687,14 @@ Báo cáo này chứa các thống kê chéo nâng cao, phân tích tương quan
 
 ---
 
-## 📊 Phân loại Sử dụng CI/CD (Adoption Stats)
+##  Phân loại Sử dụng CI/CD (Adoption Stats)
 - **Tổng mẫu nghiên cứu**: {N} sinh viên
 - **Nhóm đã thực tế sử dụng CI/CD**: {n_used} ({n_used/N*100:.1f}%)
 - **Nhóm chưa từng dùng công cụ CI/CD**: {n_unused} ({n_unused/N*100:.1f}%)
 
 ---
 
-## 🏆 NHÓM 1 — DORA METRICS & PERFORMANCE (Q11 - Q14)
+##  NHÓM 1 — DORA METRICS & PERFORMANCE (Q11 - Q14)
 
 ### Phân loại Năng lực DevOps (DORA Performance Classification)
 Dựa trên mức điểm trung bình từ 4 chỉ số DORA tiêu chuẩn (Deployment Frequency, Lead Time, Mean Time to Recovery, Change Failure Rate):
@@ -712,7 +712,7 @@ Dựa trên mức điểm trung bình từ 4 chỉ số DORA tiêu chuẩn (Depl
 
 ---
 
-## 🧠 NHÓM 4 — MÔ HÌNH CHẤP NHẬN CÔNG NGHỆ UTAUT
+##  NHÓM 4 — MÔ HÌNH CHẤP NHẬN CÔNG NGHỆ UTAUT
 
 Mô hình UTAUT đo lường các khía cạnh tâm lý xã hội và điều kiện ngoại cảnh ảnh hưởng đến hành vi áp dụng CI/CD:
 1. **Self-efficacy (Tự hiệu quả)**: Điểm trung bình = `{df['utaut_self_efficacy'].mean():.2f}` / 5.0
@@ -732,7 +732,7 @@ Mô hình UTAUT đo lường các khía cạnh tâm lý xã hội và điều ki
 
 ---
 
-## 📈 DANH SÁCH BIỂU ĐỒ NÂNG CAO ĐÃ TẠO (Saved in `reports/figures/3_advanced_grouping_correlation/`):
+##  DANH SÁCH BIỂU ĐỒ NÂNG CAO ĐÃ TẠO (Saved in `reports/figures/3_advanced_grouping_correlation/`):
 1. `adv_h1_dora_classification.png`: Phân loại performer DevOps theo chuẩn DORA.
 2. `adv_h2_cicd_vs_dora.png`: So sánh DORA score giữa nhóm dùng vs chưa dùng CI/CD (Boxplot).
 3. `adv_h3_dora_by_year_uni.png`: DORA score trung bình theo năm học và trường đại học.
@@ -760,5 +760,5 @@ Báo cáo phân tích chéo này chứng minh trực tiếp rằng: việc học
 """
 
 report_path.write_text(report_content, encoding="utf-8")
-print("🎉 Đã tạo thành công báo cáo ADVANCED_ANALYSIS_REPORT.md!")
-print("✅ Toàn bộ 22 biểu đồ phân tích chéo đã được tạo thành công trong thư mục reports/figures/3_advanced_grouping_correlation/")
+print("Done: Đã tạo thành công báo cáo ADVANCED_ANALYSIS_REPORT.md!")
+print("[OK] Toàn bộ 22 biểu đồ phân tích chéo đã được tạo thành công trong thư mục reports/figures/3_advanced_grouping_correlation/")
