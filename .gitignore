@@ -1,21 +1,14 @@
 # ===== Data files (sensitive survey responses) =====
-responses.csv
-cleaned_responses.csv
-multiple_answers_processed.csv
-tagged_free_text.csv
-open_ended_responses.txt
+raw/
+interim/
+processed/
 
-# ===== Auto-generated Report =====
-ADVANCED_ANALYSIS_REPORT.md
-
-# ===== Output charts =====
-output/
-
-# ===== Raw source file =====
-CI_CD Survey Output - Student.csv
+# ===== Auto-generated reports, figures, and executed notebooks =====
+reports/
 
 # ===== Jupyter Notebook checkpoints =====
 .ipynb_checkpoints/
+**/.ipynb_checkpoints/
 
 # ===== Python & Virtual Envs =====
 __pycache__/
@@ -23,4 +16,3 @@ __pycache__/
 .venv/
 venv/
 env/
-

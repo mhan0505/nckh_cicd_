@@ -12,7 +12,7 @@ Dự án này phân tích bộ dữ liệu thu thập từ cuộc khảo sát kh
 
 > [!NOTE]
 > Chi tiết toàn bộ 40 câu hỏi tiếng Việt cùng với bảng ánh xạ mã hóa biến tương ứng được tài liệu hóa chi tiết tại:  
-> 📋 [SURVEY_QUESTIONNAIRE.md](SURVEY_QUESTIONNAIRE.md)
+> 📋 [docs/SURVEY_QUESTIONNAIRE.md](docs/SURVEY_QUESTIONNAIRE.md)
 
 ---
 
@@ -29,8 +29,8 @@ Khi có dữ liệu mới từ Google Forms, hãy thực hiện các bước sau
 1. **Chuẩn bị dữ liệu**:
 
    - Tải file phản hồi từ Google Sheets xuống máy dưới dạng `.csv`.
-   - Lưu vào thư mục này với tên chính xác là: `CI_CD Survey Output - Student.csv`.
-   - Nếu có các câu trả lời mở mới, hãy cập nhật vào file: `open_ended_responses.txt`.
+   - Lưu vào thư mục `raw/` với tên chính xác là: `CI_CD Survey Output - Student.csv`.
+   - Nếu có các câu trả lời mở mới, hãy cập nhật vào file: `raw/open_ended_responses.txt`.
 2. **Chạy Phân tích**:
 
    - Mở Terminal/Command Prompt tại thư mục này.
@@ -40,8 +40,8 @@ Khi có dữ liệu mới từ Google Forms, hãy thực hiện các bước sau
      ```
 3. **Lấy kết quả**:
 
-   - Toàn bộ biểu đồ (Pie chart, Bar chart, Pareto, phân tích chủ đề câu hỏi mở và biểu đồ nâng cao) sẽ được tự động sinh ra và lưu vào thư mục `output/`.
-   - Các file dữ liệu trung gian (`.csv`) và báo cáo tổng hợp cũng được tạo ra để phục vụ việc kiểm tra chéo.
+   - Toàn bộ biểu đồ (Pie chart, Bar chart, Pareto, phân tích chủ đề câu hỏi mở và biểu đồ nâng cao) sẽ được tự động sinh ra trong `reports/figures/`.
+   - Các file dữ liệu trung gian (`interim/`, `processed/`) và báo cáo tổng hợp (`reports/`) cũng được tạo ra để phục vụ việc kiểm tra chéo.
 
 ---
 
@@ -49,28 +49,38 @@ Khi có dữ liệu mới từ Google Forms, hãy thực hiện các bước sau
 
 Dự án được module hóa thành 8 Notebook chạy tuần tự:
 
+## Cấu trúc thư mục
+
+- `notebooks/`: các notebook ETL và phân tích theo thứ tự pipeline.
+- `src/`: script phân tích dùng lại bởi notebook.
+- `docs/`: tài liệu khảo sát và ánh xạ biến.
+- `raw/`: dữ liệu khảo sát gốc, không commit.
+- `interim/`: dữ liệu trung gian sau ingestion, không commit.
+- `processed/`: dữ liệu đã làm sạch/biến đổi, không commit.
+- `reports/`: biểu đồ, bảng định tính, báo cáo sinh tự động và executed notebooks, không commit.
+
 ### Tầng 1: Data Ingestion (Thu thập)
 
-- `0_data_ingestion.ipynb`: Đọc file raw ban đầu và khởi tạo file chuẩn `responses.csv`.
+- `notebooks/0_data_ingestion.ipynb`: Đọc file raw ban đầu và khởi tạo file chuẩn `interim/responses.csv`.
 
 ### Tầng 2: Data Transformation (Tiền xử lý)
 
-- `1a_cleanup.ipynb`: Đổi tên cột VN → English, xử lý giá trị thiếu (Missing values), chuẩn hóa kiểu dữ liệu.
-- `1b_multiple_answer_cleanup.ipynb`: Xử lý câu hỏi Checkbox (nhiều đáp án) bằng kỹ thuật One-Hot Encoding.
-- `1c_free_text_tagging.ipynb`: Chuẩn hóa văn bản tiếng Việt và gán nhãn chủ đề (Tagging) cho câu hỏi mở.
+- `notebooks/1a_cleanup.ipynb`: Đổi tên cột VN → English, xử lý giá trị thiếu (Missing values), chuẩn hóa kiểu dữ liệu.
+- `notebooks/1b_multiple_answer_cleanup.ipynb`: Xử lý câu hỏi Checkbox (nhiều đáp án) bằng kỹ thuật One-Hot Encoding.
+- `notebooks/1c_free_text_tagging.ipynb`: Chuẩn hóa văn bản tiếng Việt và gán nhãn chủ đề (Tagging) cho câu hỏi mở.
 
 ### Tầng 3: Data Analysis & Visualization (Phân tích & Trực quan hóa)
 
-- `2a_preliminary_analysis.ipynb`: Phân tích biến nhân khẩu học và câu hỏi lựa chọn đơn.
-- `2b_multiple_answer_analysis.ipynb`: Thống kê tần suất và vẽ đồ thị Pareto cho các câu hỏi nhiều lựa chọn.
-- `2c_free_text_analysis.ipynb`: Phân tích định tính câu hỏi mở: lọc nhiễu, gán chủ đề, tổng hợp insight và trích dẫn tiêu biểu.
-- `3_advanced_analysis.ipynb`: Phân tích chéo nâng cao, ánh xạ **DORA Metrics** và kiểm định mô hình **UTAUT** (được mô tả chi tiết ở phần dưới).
+- `notebooks/2a_preliminary_analysis.ipynb`: Phân tích biến nhân khẩu học và câu hỏi lựa chọn đơn.
+- `notebooks/2b_multiple_answer_analysis.ipynb`: Thống kê tần suất và vẽ đồ thị Pareto cho các câu hỏi nhiều lựa chọn.
+- `notebooks/2c_free_text_analysis.ipynb`: Phân tích định tính câu hỏi mở: lọc nhiễu, gán chủ đề, tổng hợp insight và trích dẫn tiêu biểu.
+- `notebooks/3_advanced_analysis.ipynb`: Phân tích chéo nâng cao, ánh xạ **DORA Metrics** và kiểm định mô hình **UTAUT** (được mô tả chi tiết ở phần dưới).
 
 ---
 
 ## 📈 Khung Phân tích Nâng cao (Advanced Analysis)
 
-Tệp notebook nâng cao [3_advanced_analysis.ipynb](3_advanced_analysis.ipynb) tự động chạy tập lệnh phân tích [advanced_analysis.py](advanced_analysis.py) để thực hiện kiểm chứng 20 hướng giả thuyết khoa học:
+Tệp notebook nâng cao [notebooks/3_advanced_analysis.ipynb](notebooks/3_advanced_analysis.ipynb) tự động chạy tập lệnh phân tích [src/advanced_analysis.py](src/advanced_analysis.py) để thực hiện kiểm chứng 20 hướng giả thuyết khoa học:
 1. **Nhóm 1 - DORA metrics** (Hiệu suất DevOps thực tế): Phân loại sinh viên theo Low/Medium/High/Elite performer và kiểm định tương quan DORA score với việc áp dụng CI/CD.
 2. **Nhóm 2 - Nhận thức & Thực hành**: Phân tích phễu nhận thức theo năm học, xác định khoảng cách "Biết - Làm" (Knowing-Doing Gap) và mối liên hệ giữa các công cụ với mức tự động hóa.
 3. **Nhóm 3 - Nguồn học & Hiệu quả**: So sánh hiệu quả của các nguồn tiếp cận (Tự học, trường lớp, thực tập doanh nghiệp) đối với mức tự động hóa thực tế và sự tự tin nghề nghiệp.
@@ -80,7 +90,7 @@ Tệp notebook nâng cao [3_advanced_analysis.ipynb](3_advanced_analysis.ipynb) 
 
 > [!TIP]
 > Kết quả thống kê chi tiết của phân tích chéo cùng các hệ số kiểm định được lưu tại:  
-> 📝 [ADVANCED_ANALYSIS_REPORT.md](ADVANCED_ANALYSIS_REPORT.md)
+> 📝 `reports/ADVANCED_ANALYSIS_REPORT.md`
 
 ---
 

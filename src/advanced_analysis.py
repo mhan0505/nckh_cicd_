@@ -48,12 +48,12 @@ PALETTE_MAIN = sns.color_palette("deep", 10)
 COLOR_GRADIENT = sns.color_palette("coolwarm", as_cmap=True)
 
 # Tạo thư mục output nếu chưa có
-OUTPUT_DIR = Path("output/3_advanced_grouping_correlation")
+OUTPUT_DIR = Path("reports/figures/3_advanced_grouping_correlation")
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 # ── ĐỌC DỮ LIỆU ──────────────────────────────────────────
-DATA_FILE = "multiple_answers_processed.csv"
-if not Path(DATA_FILE).exists():
+DATA_FILE = Path("processed/multiple_answers_processed.csv")
+if not DATA_FILE.exists():
     print(f"❌ Không tìm thấy file {DATA_FILE}. Chạy tầng 1 và tầng 2 trước!")
     sys.exit(1)
 
@@ -677,7 +677,8 @@ plt.close()
 
 # ── XUẤT FILE TỔNG HỢP REPORT THỐNG KÊ ────────────────────
 print("\n📝 Đang tạo tệp báo cáo tổng kết advanced_analysis_report.md...")
-report_path = Path("ADVANCED_ANALYSIS_REPORT.md")
+report_path = Path("reports/ADVANCED_ANALYSIS_REPORT.md")
+report_path.parent.mkdir(parents=True, exist_ok=True)
 
 # Viết một báo cáo markdown chất lượng cao
 report_content = f"""# Báo cáo Phân tích Nâng cao - Dữ liệu Khảo sát CI/CD
@@ -731,7 +732,7 @@ Mô hình UTAUT đo lường các khía cạnh tâm lý xã hội và điều ki
 
 ---
 
-## 📈 DANH SÁCH BIỂU ĐỒ NÂNG CAO ĐÃ TẠO (Saved in `output/3_advanced_grouping_correlation/`):
+## 📈 DANH SÁCH BIỂU ĐỒ NÂNG CAO ĐÃ TẠO (Saved in `reports/figures/3_advanced_grouping_correlation/`):
 1. `adv_h1_dora_classification.png`: Phân loại performer DevOps theo chuẩn DORA.
 2. `adv_h2_cicd_vs_dora.png`: So sánh DORA score giữa nhóm dùng vs chưa dùng CI/CD (Boxplot).
 3. `adv_h3_dora_by_year_uni.png`: DORA score trung bình theo năm học và trường đại học.
@@ -760,4 +761,4 @@ Báo cáo phân tích chéo này chứng minh trực tiếp rằng: việc học
 
 report_path.write_text(report_content, encoding="utf-8")
 print("🎉 Đã tạo thành công báo cáo ADVANCED_ANALYSIS_REPORT.md!")
-print("✅ Toàn bộ 22 biểu đồ phân tích chéo đã được tạo thành công trong thư mục output/3_advanced_grouping_correlation/")
+print("✅ Toàn bộ 22 biểu đồ phân tích chéo đã được tạo thành công trong thư mục reports/figures/3_advanced_grouping_correlation/")

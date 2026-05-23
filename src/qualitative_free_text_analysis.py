@@ -25,8 +25,10 @@ if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
     sys.stdout.reconfigure(encoding="utf-8", errors="replace")
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
-INPUT_FILE = Path("tagged_free_text.csv")
-OUTPUT_DIR = Path("output/2_multiple_answers_freetext")
+INPUT_FILE = Path("processed/tagged_free_text.csv")
+FIGURE_DIR = Path("reports/figures/2_multiple_answers_freetext")
+OUTPUT_DIR = Path("reports/free_text")
+FIGURE_DIR.mkdir(parents=True, exist_ok=True)
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)
 
 STALE_PATTERNS = ["wordcloud_*.png", "keywords_*.png", "freetext_tags_*.png"]
@@ -211,7 +213,7 @@ def score_theme_quote(row: pd.Series, theme: str) -> float:
 
 def cleanup_old_outputs() -> None:
     for pattern in STALE_PATTERNS:
-        for path in OUTPUT_DIR.glob(pattern):
+        for path in FIGURE_DIR.glob(pattern):
             path.unlink(missing_ok=True)
 
 
@@ -229,7 +231,7 @@ def plot_response_quality(df: pd.DataFrame) -> None:
     ax.set_title("Chất lượng câu trả lời mở sau khi lọc nhiễu", fontweight="bold", pad=12)
     sns.despine()
     plt.tight_layout()
-    plt.savefig(OUTPUT_DIR / "freetext_response_quality.png", dpi=150)
+    plt.savefig(FIGURE_DIR / "freetext_response_quality.png", dpi=150)
     plt.close()
 
 
@@ -245,7 +247,7 @@ def plot_theme_overall(theme_counts: pd.Series, n_valid: int) -> None:
     ax.set_xlim(0, max(theme_counts.max() * 1.25, 1))
     sns.despine(left=True)
     plt.tight_layout()
-    plt.savefig(OUTPUT_DIR / "freetext_theme_overall.png", dpi=150)
+    plt.savefig(FIGURE_DIR / "freetext_theme_overall.png", dpi=150)
     plt.close()
 
 
@@ -262,7 +264,7 @@ def plot_theme_by_group(valid_df: pd.DataFrame) -> None:
     ax.set_title("Bản đồ chủ đề theo từng nhóm câu hỏi mở", fontweight="bold", pad=12)
     ax.set_xticklabels(ax.get_xticklabels(), rotation=35, ha="right")
     plt.tight_layout()
-    plt.savefig(OUTPUT_DIR / "freetext_theme_by_question_group.png", dpi=150)
+    plt.savefig(FIGURE_DIR / "freetext_theme_by_question_group.png", dpi=150)
     plt.close()
 
     ct.to_csv(OUTPUT_DIR / "freetext_theme_by_question_group.csv", encoding="utf-8-sig")
@@ -363,9 +365,9 @@ def main() -> None:
     write_markdown_report(df, valid_df, theme_summary)
 
     print(f"OK Qualitative free-text analysis complete: {len(valid_df)}/{len(df)} valid responses")
-    print(f"   Saved: {OUTPUT_DIR / 'freetext_response_quality.png'}")
-    print(f"   Saved: {OUTPUT_DIR / 'freetext_theme_overall.png'}")
-    print(f"   Saved: {OUTPUT_DIR / 'freetext_theme_by_question_group.png'}")
+    print(f"   Saved: {FIGURE_DIR / 'freetext_response_quality.png'}")
+    print(f"   Saved: {FIGURE_DIR / 'freetext_theme_overall.png'}")
+    print(f"   Saved: {FIGURE_DIR / 'freetext_theme_by_question_group.png'}")
     print(f"   Saved: {OUTPUT_DIR / 'freetext_theme_summary.csv'}")
     print(f"   Saved: {OUTPUT_DIR / 'FREETEXT_QUALITATIVE_FINDINGS.md'}")
 

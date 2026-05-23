@@ -42,10 +42,10 @@ PIPELINE = [
         "name": "Data Ingestion",
         "icon": "📥",
         "notebooks": [
-            "0_data_ingestion.ipynb",
+            "notebooks/0_data_ingestion.ipynb",
         ],
         "expected_outputs": [
-            "responses.csv",
+            "interim/responses.csv",
         ],
     },
     {
@@ -53,14 +53,14 @@ PIPELINE = [
         "name": "Data Transformation / Cleaning",
         "icon": "🧹",
         "notebooks": [
-            "1a_cleanup.ipynb",
-            "1b_multiple_answer_cleanup.ipynb",
-            "1c_free_text_tagging.ipynb",
+            "notebooks/1a_cleanup.ipynb",
+            "notebooks/1b_multiple_answer_cleanup.ipynb",
+            "notebooks/1c_free_text_tagging.ipynb",
         ],
         "expected_outputs": [
-            "cleaned_responses.csv",
-            "multiple_answers_processed.csv",
-            "tagged_free_text.csv",
+            "processed/cleaned_responses.csv",
+            "processed/multiple_answers_processed.csv",
+            "processed/tagged_free_text.csv",
         ],
     },
     {
@@ -68,15 +68,16 @@ PIPELINE = [
         "name": "Data Analysis & Visualization",
         "icon": "📊",
         "notebooks": [
-            "2a_preliminary_analysis.ipynb",
-            "2b_multiple_answer_analysis.ipynb",
-            "2c_free_text_analysis.ipynb",
-            "3_advanced_analysis.ipynb",
+            "notebooks/2a_preliminary_analysis.ipynb",
+            "notebooks/2b_multiple_answer_analysis.ipynb",
+            "notebooks/2c_free_text_analysis.ipynb",
+            "notebooks/3_advanced_analysis.ipynb",
         ],
         "expected_outputs": [
-            "output/1_demographics_descriptive/",
-            "output/2_multiple_answers_freetext/",
-            "output/3_advanced_grouping_correlation/",
+            "reports/figures/1_demographics_descriptive/",
+            "reports/figures/2_multiple_answers_freetext/",
+            "reports/figures/3_advanced_grouping_correlation/",
+            "reports/free_text/",
         ],
     },
 ]
@@ -110,6 +111,8 @@ def execute_notebook(notebook_name, base_dir):
         (success: bool, elapsed_seconds: float, error_msg: str)
     """
     notebook_path = base_dir / notebook_name
+    executed_dir = base_dir / "reports" / "executed_notebooks"
+    executed_dir.mkdir(parents=True, exist_ok=True)
     
     if not notebook_path.exists():
         return False, 0.0, f"File không tồn tại: {notebook_path}"
@@ -118,9 +121,11 @@ def execute_notebook(notebook_name, base_dir):
         sys.executable, "-m", "jupyter", "nbconvert",
         "--to", "notebook",
         "--execute",
-        "--inplace",
+        "--output-dir", str(executed_dir),
+        "--output", notebook_path.name,
         "--ExecutePreprocessor.timeout=600",    # Timeout 10 phút/cell
         "--ExecutePreprocessor.kernel_name=python3",
+        f"--ExecutePreprocessor.cwd={base_dir}",
         str(notebook_path),
     ]
     
@@ -289,10 +294,10 @@ def _print_summary(results, pipeline_start, success, stopped_at=None):
     
     if success:
         # Đếm biểu đồ output
-        output_dir = BASE_DIR / "output"
+        output_dir = BASE_DIR / "reports" / "figures"
         if output_dir.is_dir():
             charts = list(output_dir.glob("**/*.png"))
-            print(f"\n  🎨 Biểu đồ đã tạo: {len(charts)} file trong output/")
+            print(f"\n  🎨 Biểu đồ đã tạo: {len(charts)} file trong reports/figures/")
             for chart in sorted(charts):
                 size_kb = chart.stat().st_size / 1024
                 print(f"     📈 {chart.name} ({size_kb:.0f} KB)")
