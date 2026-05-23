@@ -3,6 +3,10 @@ responses.csv
 cleaned_responses.csv
 multiple_answers_processed.csv
 tagged_free_text.csv
+open_ended_responses.txt
+
+# ===== Auto-generated Report =====
+ADVANCED_ANALYSIS_REPORT.md
 
 # ===== Output charts =====
 output/
@@ -13,6 +17,10 @@ CI_CD Survey Output - Student.csv
 # ===== Jupyter Notebook checkpoints =====
 .ipynb_checkpoints/
 
-# ===== Python =====
+# ===== Python & Virtual Envs =====
 __pycache__/
 *.pyc
+.venv/
+venv/
+env/
+

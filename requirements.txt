@@ -1,6 +1,7 @@
 # Xử lý dữ liệu
 pandas>=2.0.0
 numpy>=1.24.0
+scipy>=1.10.0
 
 # Trực quan hóa dữ liệu
 matplotlib>=3.7.0
@@ -12,3 +13,5 @@ nbconvert>=7.0.0
 nbformat>=5.9.0
 ipykernel>=6.0.0
 traitlets>=5.0.0
+jupyter>=1.0.0
+

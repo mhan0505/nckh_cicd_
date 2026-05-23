@@ -71,9 +71,12 @@ PIPELINE = [
             "2a_preliminary_analysis.ipynb",
             "2b_multiple_answer_analysis.ipynb",
             "2c_free_text_analysis.ipynb",
+            "3_advanced_analysis.ipynb",
         ],
         "expected_outputs": [
-            "output/",  # Thư mục chứa biểu đồ
+            "output/1_demographics_descriptive/",
+            "output/2_multiple_answers_freetext/",
+            "output/3_advanced_grouping_correlation/",
         ],
     },
 ]
@@ -288,7 +291,7 @@ def _print_summary(results, pipeline_start, success, stopped_at=None):
         # Đếm biểu đồ output
         output_dir = BASE_DIR / "output"
         if output_dir.is_dir():
-            charts = list(output_dir.glob("*.png"))
+            charts = list(output_dir.glob("**/*.png"))
             print(f"\n  🎨 Biểu đồ đã tạo: {len(charts)} file trong output/")
             for chart in sorted(charts):
                 size_kb = chart.stat().st_size / 1024
