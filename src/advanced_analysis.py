@@ -133,17 +133,41 @@ def classify_dora(score):
 
 df["dora_class"] = df["dora_score"].apply(classify_dora)
 
-# Hướng 1: Phân loại Performer & so sánh tần suất sử dụng thực tế
-print("Note: Hướng 1: DORA Performance Classification")
-fig, ax = plt.subplots(figsize=(8, 5))
+# Hướng 1: Phân loại Performer & so sánh tần suất sử dụng thực tế (2 panels)
+print("Note: Hướng 1: DORA Performance Classification (2 panels)")
+fig, axes = plt.subplots(1, 2, figsize=(15, 6))
 dora_order = ["Low Performer", "Medium Performer", "High Performer", "Elite Performer"]
+
+# a) Phân loại Năng lực DevOps (Toàn bộ mẫu)
 dora_counts = df["dora_class"].value_counts().reindex(dora_order).fillna(0)
-sns.barplot(x=dora_counts.index, y=dora_counts.values, palette=COLORS_DORA, ax=ax)
+sns.barplot(x=dora_counts.index, y=dora_counts.values, palette=COLORS_DORA, ax=axes[0])
 for i, val in enumerate(dora_counts.values):
     pct = val / N * 100
-    ax.text(i, val + 1, f"{int(val)} ({pct:.1f}%)", ha="center", fontweight="bold", fontsize=9)
-ax.set_title("Phân loại Năng lực DevOps của Sinh viên theo Tiêu chuẩn DORA", fontsize=12, fontweight="bold", pad=12)
-ax.set_ylabel("Số lượng sinh viên")
+    axes[0].text(i, val + 1, f"{int(val)} ({pct:.1f}%)", ha="center", fontweight="bold", fontsize=9)
+axes[0].set_title("a) Phân loại Năng lực DevOps (Toàn bộ mẫu, N = 151)", fontsize=11, fontweight="bold", pad=10)
+axes[0].set_ylabel("Số lượng sinh viên")
+
+# b) Phân bố Sử dụng CI/CD theo Lớp Performer DORA
+df["has_used_cicd_str"] = df["has_used_cicd"].map({1: "Đã dùng CI/CD", 0: "Chưa dùng CI/CD"})
+crosstab_dora_use = pd.crosstab(df["dora_class"], df["has_used_cicd_str"]).reindex(dora_order).fillna(0)
+
+crosstab_dora_use.plot(kind="bar", stacked=True, color=["#e74c3c", "#2ecc71"], ax=axes[1], edgecolor="white", width=0.5)
+axes[1].set_xticklabels(axes[1].get_xticklabels(), rotation=0)
+axes[1].set_title("b) Phân bố Sử dụng CI/CD theo Lớp Performer DORA", fontsize=11, fontweight="bold", pad=10)
+axes[1].set_ylabel("Số lượng sinh viên")
+axes[1].set_xlabel("")
+axes[1].legend(title="Trạng thái sử dụng")
+
+# Thêm nhãn số lượng trên các cột của biểu đồ stacked
+for col_idx, dora_cls in enumerate(dora_order):
+    y_base = 0
+    for status in ["Chưa dùng CI/CD", "Đã dùng CI/CD"]:
+        if status in crosstab_dora_use.columns:
+            val = crosstab_dora_use.loc[dora_cls, status]
+            if val > 0:
+                axes[1].text(col_idx, y_base + val/2, f"{int(val)}", ha="center", va="center", color="white", fontweight="bold", fontsize=9)
+                y_base += val
+
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / "adv_h1_dora_classification.png", dpi=150)
 plt.close()
@@ -345,8 +369,9 @@ plt.close()
 # ==============================================================================
 print("\n--- Nhóm 3: Nguồn học & Hiệu quả ---")
 
-# Hướng 8: Nguồn học vs mức tự động hóa thực tế
-print("Note: Hướng 8: Nguồn học vs mức tự động hóa thực tế")
+# Hướng 8: Nguồn học vs mức tự động hóa thực tế (lọc theo Q7 - has_used_cicd == 1)
+print("Note: Hướng 8: Nguồn học & Công cụ vs mức tự động hóa thực tế (2 panels)")
+
 # Danh sách nguồn tiếp cận CI/CD chính
 sources = [
     "Môn học tại trường đại học",
@@ -356,26 +381,65 @@ sources = [
     "Tự tìm hiểu qua tài liệu trên Internet"
 ]
 
-# Tạo dataframe chứa mức độ tự động hóa phân rã theo nguồn tiếp cận
+# Chỉ phân tích trên nhóm sinh viên đã dùng CI/CD để tránh làm loãng dữ liệu (gộp Q7)
+df_active = df[df["has_used_cicd"] == 1].copy()
+
+# A. Thống kê theo nguồn học tập
 source_auto_data = []
 for sname in sources:
-    subset = df[df["Q8_learning_source"].str.contains(sname, na=False, regex=False)]
-    if len(subset) > 5:
-        # Tính tỉ lệ tự động hóa cao trở lên (Tự động hóa cao hoặc Tự động hóa hoàn toàn)
+    subset = df_active[df_active["Q8_learning_source"].str.contains(sname, na=False, regex=False)]
+    if len(subset) > 0:
         n_high = subset["Q6_automation_level"].apply(
             lambda x: 1 if "Tự động hóa cao" in str(x) or "Tự động hóa hoàn toàn" in str(x) else 0
         ).sum()
         pct_high = n_high / len(subset) * 100
         source_auto_data.append({"Nguồn tiếp cận": sname, "Số lượng": len(subset), "Tỉ lệ TĐH Cao/Tối ưu (%)": pct_high})
 
-df_source_auto = pd.DataFrame(source_auto_data).sort_values("Tỉ lệ TĐH Cao/Tối ưu (%)", ascending=False)
+df_source_auto = pd.DataFrame(source_auto_data)
+if not df_source_auto.empty:
+    df_source_auto = df_source_auto.sort_values("Tỉ lệ TĐH Cao/Tối ưu (%)", ascending=False)
+else:
+    df_source_auto = pd.DataFrame(columns=["Nguồn tiếp cận", "Số lượng", "Tỉ lệ TĐH Cao/Tối ưu (%)"])
 
-fig, ax = plt.subplots(figsize=(9, 4.5))
-sns.barplot(data=df_source_auto, x="Tỉ lệ TĐH Cao/Tối ưu (%)", y="Nguồn tiếp cận", palette="Greens_d", ax=ax)
-for i, row in enumerate(df_source_auto.itertuples()):
-    ax.text(row[3] + 1, i, f"{row[3]:.1f}% (N={row[2]})", va="center", fontweight="bold", fontsize=9)
-ax.set_title("Tỉ lệ sinh viên đạt Mức tự động hóa Cao/Tối ưu phân loại theo Nguồn tiếp cận CI/CD", fontsize=11, fontweight="bold", pad=12)
-ax.set_xlabel("Tỉ lệ đạt mức TĐH cao hoặc tối ưu (%)")
+# B. Thống kê theo công cụ chính (main_tool)
+tool_auto_data = []
+tool_categories = ["GitHub Actions", "GitLab CI/CD", "Jenkins", "Sử dụng nhiều công cụ"]
+for tname in tool_categories:
+    subset = df_active[df_active["main_tool"] == tname]
+    if len(subset) > 0:
+        n_high = subset["Q6_automation_level"].apply(
+            lambda x: 1 if "Tự động hóa cao" in str(x) or "Tự động hóa hoàn toàn" in str(x) else 0
+        ).sum()
+        pct_high = n_high / len(subset) * 100
+        tool_auto_data.append({"Công cụ": tname, "Số lượng": len(subset), "Tỉ lệ TĐH Cao/Tối ưu (%)": pct_high})
+
+df_tool_auto = pd.DataFrame(tool_auto_data)
+if not df_tool_auto.empty:
+    df_tool_auto = df_tool_auto.sort_values("Tỉ lệ TĐH Cao/Tối ưu (%)", ascending=False)
+else:
+    df_tool_auto = pd.DataFrame(columns=["Công cụ", "Số lượng", "Tỉ lệ TĐH Cao/Tối ưu (%)"])
+
+# Vẽ biểu đồ 2 panels
+fig, axes = plt.subplots(1, 2, figsize=(16, 6))
+
+# Panel A: Theo nguồn học
+if not df_source_auto.empty:
+    sns.barplot(data=df_source_auto, x="Tỉ lệ TĐH Cao/Tối ưu (%)", y="Nguồn tiếp cận", palette="Greens_d", ax=axes[0])
+    for i, row in enumerate(df_source_auto.itertuples()):
+        axes[0].text(row[3] + 1, i, f"{row[3]:.1f}% (N={row[2]})", va="center", fontweight="bold", fontsize=9)
+axes[0].set_title("a) Tỉ lệ TĐH Cao/Tối ưu theo Nguồn tiếp cận CI/CD\n(Chỉ tính nhóm đã dùng CI/CD)", fontsize=11, fontweight="bold", pad=10)
+axes[0].set_xlabel("Tỉ lệ đạt mức TĐH cao hoặc tối ưu (%)")
+axes[0].set_ylabel("")
+
+# Panel B: Theo công cụ chính (main_tool)
+if not df_tool_auto.empty:
+    sns.barplot(data=df_tool_auto, x="Tỉ lệ TĐH Cao/Tối ưu (%)", y="Công cụ", palette="Purples_d", ax=axes[1])
+    for i, row in enumerate(df_tool_auto.itertuples()):
+        axes[1].text(row[3] + 1, i, f"{row[3]:.1f}% (N={row[2]})", va="center", fontweight="bold", fontsize=9)
+axes[1].set_title("b) Tỉ lệ TĐH Cao/Tối ưu theo Công cụ CI/CD chính\n(Chỉ tính nhóm đã dùng CI/CD)", fontsize=11, fontweight="bold", pad=10)
+axes[1].set_xlabel("Tỉ lệ đạt mức TĐH cao hoặc tối ưu (%)")
+axes[1].set_ylabel("")
+
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / "adv_h8_learning_vs_automation.png", dpi=150)
 plt.close()
