@@ -13,3 +13,11 @@ nbformat>=5.9.0
 ipykernel>=6.0.0
 traitlets>=5.0.0
 jupyter>=1.0.0
+
+# FastAPI Webhook API
+fastapi>=0.100.0
+uvicorn>=0.22.0
+requests>=2.31.0
+
+# Streamlit Interactive Dashboard
+streamlit>=1.24.0
