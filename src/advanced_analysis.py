@@ -339,7 +339,7 @@ def get_main_tool(row):
     if not tools:
         if row.get("Q7_tools_used__Chưa từng sử dụng công cụ CI/CD nào", 0) == 1:
             return "Chưa sử dụng"
-        return "Khác / Không trả lời"
+        return "Công cụ khác"
     elif len(tools) > 1:
         return "Sử dụng nhiều công cụ"
     return tools[0]
@@ -347,9 +347,8 @@ def get_main_tool(row):
 df["main_tool"] = df.apply(get_main_tool, axis=1)
 
 crosstab_tool_auto = pd.crosstab(df["main_tool"], df["Q6_automation_level"], normalize="index") * 100
-# Lọc bỏ dòng Không trả lời để đồ thị sạch hơn
 crosstab_tool_auto = crosstab_tool_auto.reindex(
-    index=["Chưa sử dụng", "GitHub Actions", "GitLab CI/CD", "Jenkins", "Sử dụng nhiều công cụ"],
+    index=["Chưa sử dụng", "GitHub Actions", "GitLab CI/CD", "Jenkins", "Sử dụng nhiều công cụ", "Công cụ khác"],
     columns=[c for c in auto_order if c in crosstab_tool_auto.columns]
 ).fillna(0)
 
@@ -403,7 +402,7 @@ else:
 
 # B. Thống kê theo công cụ chính (main_tool)
 tool_auto_data = []
-tool_categories = ["GitHub Actions", "GitLab CI/CD", "Jenkins", "Sử dụng nhiều công cụ"]
+tool_categories = ["GitHub Actions", "GitLab CI/CD", "Jenkins", "Sử dụng nhiều công cụ", "Công cụ khác"]
 for tname in tool_categories:
     subset = df_active[df_active["main_tool"] == tname]
     if len(subset) > 0:
@@ -426,7 +425,8 @@ fig, axes = plt.subplots(1, 2, figsize=(16, 6))
 if not df_source_auto.empty:
     sns.barplot(data=df_source_auto, x="Tỉ lệ TĐH Cao/Tối ưu (%)", y="Nguồn tiếp cận", palette="Greens_d", ax=axes[0])
     for i, row in enumerate(df_source_auto.itertuples()):
-        axes[0].text(row[3] + 1, i, f"{row[3]:.1f}% (N={row[2]})", va="center", fontweight="bold", fontsize=9)
+        n_high = int(round(row[2] * row[3] / 100))
+        axes[0].text(row[3] + 1, i, f"{row[3]:.1f}% ({n_high}/{row[2]} SV)", va="center", fontweight="bold", fontsize=9)
 axes[0].set_title("a) Tỉ lệ TĐH Cao/Tối ưu theo Nguồn tiếp cận CI/CD\n(Chỉ tính nhóm đã dùng CI/CD)", fontsize=11, fontweight="bold", pad=10)
 axes[0].set_xlabel("Tỉ lệ đạt mức TĐH cao hoặc tối ưu (%)")
 axes[0].set_ylabel("")
@@ -435,7 +435,8 @@ axes[0].set_ylabel("")
 if not df_tool_auto.empty:
     sns.barplot(data=df_tool_auto, x="Tỉ lệ TĐH Cao/Tối ưu (%)", y="Công cụ", palette="Purples_d", ax=axes[1])
     for i, row in enumerate(df_tool_auto.itertuples()):
-        axes[1].text(row[3] + 1, i, f"{row[3]:.1f}% (N={row[2]})", va="center", fontweight="bold", fontsize=9)
+        n_high = int(round(row[2] * row[3] / 100))
+        axes[1].text(row[3] + 1, i, f"{row[3]:.1f}% ({n_high}/{row[2]} SV)", va="center", fontweight="bold", fontsize=9)
 axes[1].set_title("b) Tỉ lệ TĐH Cao/Tối ưu theo Công cụ CI/CD chính\n(Chỉ tính nhóm đã dùng CI/CD)", fontsize=11, fontweight="bold", pad=10)
 axes[1].set_xlabel("Tỉ lệ đạt mức TĐH cao hoặc tối ưu (%)")
 axes[1].set_ylabel("")
