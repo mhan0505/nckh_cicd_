@@ -16,3 +16,6 @@ __pycache__/
 .venv/
 venv/
 env/
+
+# ===== Ignore nested git repos / submodules =====
+academic-research-skills/
