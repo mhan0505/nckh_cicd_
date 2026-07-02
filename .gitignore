@@ -19,3 +19,6 @@ env/
 
 # ===== Ignore nested git repos / submodules =====
 academic-research-skills/
+
+# ===== Temporary files =====
+scratch/

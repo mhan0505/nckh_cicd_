@@ -35,6 +35,11 @@ if sys.platform == "win32":
 # Thư mục gốc = nơi chứa script này
 BASE_DIR = Path(__file__).parent.resolve()
 
+# Tự động tạo các thư mục đầu ra cần thiết nếu chưa tồn tại (tránh lỗi trên máy clone mới)
+for folder in ["interim", "processed", "reports", "reports/figures", "reports/free_text", "scratch"]:
+    (BASE_DIR / folder).mkdir(parents=True, exist_ok=True)
+
+
 # Định nghĩa 3 tầng — mỗi tầng là list các notebook
 PIPELINE = [
     {
