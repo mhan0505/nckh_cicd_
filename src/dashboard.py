@@ -381,7 +381,7 @@ else:
         c1, c2 = st.columns(2)
         with c1:
             st.subheader("Biểu đồ Pareto: Khó khăn lớn nhất trong quy trình CI/CD")
-            img_path = FIGURES_DIR / "2_multiple_answers_freetext" / "Q33_cicd_difficulties_pareto.png"
+            img_path = FIGURES_DIR / "2a_multiple_choice" / "Q33_cicd_difficulties_pareto.png"
             if img_path.exists():
                 st.image(str(img_path), use_container_width=True)
                 
@@ -392,7 +392,7 @@ else:
                 
         with c2:
             st.subheader("Biểu đồ Pareto: Thách thức khiến sinh viên khó áp dụng")
-            img_path = FIGURES_DIR / "2_multiple_answers_freetext" / "Q34_adoption_barriers_pareto.png"
+            img_path = FIGURES_DIR / "2a_multiple_choice" / "Q34_adoption_barriers_pareto.png"
             if img_path.exists():
                 st.image(str(img_path), use_container_width=True)
                 
@@ -409,13 +409,13 @@ else:
         c1, c2 = st.columns(2)
         with c1:
             st.subheader("Phân bố chủ đề phản hồi mở chung")
-            img_path = FIGURES_DIR / "2_multiple_answers_freetext" / "freetext_theme_overall.png"
+            img_path = FIGURES_DIR / "2b_freetext" / "freetext_theme_overall.png"
             if img_path.exists():
                 st.image(str(img_path), use_container_width=True)
                 
         with c2:
             st.subheader("Phân bố chủ đề theo các nhóm câu hỏi cụ thể")
-            img_path = FIGURES_DIR / "2_multiple_answers_freetext" / "freetext_theme_by_question_group.png"
+            img_path = FIGURES_DIR / "2b_freetext" / "freetext_theme_by_question_group.png"
             if img_path.exists():
                 st.image(str(img_path), use_container_width=True)
 

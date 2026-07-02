@@ -1,0 +1,22 @@
+=== BARRIERS FOR ALL NON-USERS (N = 89) ===
+
+Awareness among non-users:
+  Chưa bao giờ nghe: 50 (56.2%)
+  Có nghe qua nhưng chưa hiểu rõ: 31 (34.8%)
+  Biết khái niệm cơ bản: 8 (9.0%)
+
+Q39 Biggest barriers (multi-select check):
+  Thiếu kiến thức hoặc kỹ năng về CI/CD và DevOps: 39 (43.8%)
+  Khó thiết lập và cấu hình các công cụ CI/CD: 12 (13.5%)
+  Thiếu môi trường thực hành (server, cloud, Docker, v.v.): 11 (12.4%)
+  Ít cơ hội thực hành CI/CD trong các môn học tại trường: 25 (28.1%)
+  Dự án học tập còn đơn giản nên chưa thấy cần CI/CD: 16 (18.0%)
+  Khó phối hợp làm việc nhóm khi áp dụng CI/CD: 9 (10.1%)
+  iu: 1 (1.1%)
+
+Q40 Expected benefits for non-users:
+  Giảm bớt các công việc thủ công lặp đi lặp lại (build, test, deploy): 38 (42.7%)
+  Phát hiện lỗi sớm hơn trong quá trình phát triển phần mềm.: 23 (25.8%)
+  Tăng tốc độ phát triển và cập nhật dự án.: 24 (27.0%)
+  Nâng cao kỹ năng DevOps và kinh nghiệm thực tế cho sinh viên.: 23 (25.8%)
+  Không biết: 1 (1.1%)

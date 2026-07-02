@@ -5,9 +5,9 @@ Báo cáo này chứa các thống kê chéo nâng cao, phân tích tương quan
 ---
 
 ##  Phân loại Sử dụng CI/CD (Adoption Stats)
-- **Tổng mẫu nghiên cứu**: 157 sinh viên
-- **Nhóm đã thực tế sử dụng CI/CD**: 67 (42.7%)
-- **Nhóm chưa từng dùng công cụ CI/CD**: 90 (57.3%)
+- **Tổng mẫu nghiên cứu**: 126 sinh viên
+- **Nhóm đã thực tế sử dụng CI/CD**: 50 (39.7%)
+- **Nhóm chưa từng dùng công cụ CI/CD**: 76 (60.3%)
 
 ---
 
@@ -15,15 +15,15 @@ Báo cáo này chứa các thống kê chéo nâng cao, phân tích tương quan
 
 ### Phân loại Năng lực DevOps (DORA Performance Classification)
 Dựa trên mức điểm trung bình từ 4 chỉ số DORA tiêu chuẩn (Deployment Frequency, Lead Time, Mean Time to Recovery, Change Failure Rate):
-- **Elite Performer**: 23 sinh viên (14.6%)
-- **High Performer**: 47 sinh viên (29.9%)
-- **Medium Performer**: 35 sinh viên (22.3%)
-- **Low Performer**: 52 sinh viên (33.1%)
+- **Elite Performer**: 15 sinh viên (11.9%)
+- **High Performer**: 35 sinh viên (27.8%)
+- **Medium Performer**: 25 sinh viên (19.8%)
+- **Low Performer**: 51 sinh viên (40.5%)
 
 ### Kiểm định giả thuyết CI/CD và Hiệu suất DevOps (Hướng 2)
 - **Giả thuyết khoa học**: Áp dụng công cụ CI/CD làm tăng đáng kể năng lực DevOps tổng thể của sinh viên.
 - **Kết quả T-test độc lập**:
-  - Giá trị t-statistic: `9.6853`
+  - Giá trị t-statistic: `10.1083`
   - p-value: `0.000000`
 - **Kết luận**: p-value cực nhỏ (< 0.001) cho thấy sự khác biệt về năng lực DORA giữa nhóm sử dụng CI/CD và nhóm không sử dụng là **cực kỳ có ý nghĩa thống kê**. Việc áp dụng CI/CD thực sự cải thiện năng lực phân phối phần mềm của sinh viên.
 
@@ -32,19 +32,19 @@ Dựa trên mức điểm trung bình từ 4 chỉ số DORA tiêu chuẩn (Depl
 ##  NHÓM 4 — MÔ HÌNH CHẤP NHẬN CÔNG NGHỆ UTAUT
 
 Mô hình UTAUT đo lường các khía cạnh tâm lý xã hội và điều kiện ngoại cảnh ảnh hưởng đến hành vi áp dụng CI/CD:
-1. **Self-efficacy (Tự hiệu quả)**: Điểm trung bình = `3.55` / 5.0
-2. **Social Influence (Áp lực xã hội)**: Điểm trung bình = `3.62` / 5.0
-3. **Facilitating Conditions (Điều kiện hỗ trợ)**: Điểm trung bình = `3.54` / 5.0
-4. **Behavioral Intention (Ý định hành vi)**: Điểm trung bình = `3.77` / 5.0
-5. **Use Behavior (Hành vi sử dụng thực tế)**: Điểm trung bình = `3.47` / 5.0
+1. **Self-efficacy (Tự hiệu quả)**: Điểm trung bình = `3.42` / 5.0
+2. **Social Influence (Áp lực xã hội)**: Điểm trung bình = `3.53` / 5.0
+3. **Facilitating Conditions (Điều kiện hỗ trợ)**: Điểm trung bình = `3.41` / 5.0
+4. **Behavioral Intention (Ý định hành vi)**: Điểm trung bình = `3.74` / 5.0
+5. **Use Behavior (Hành vi sử dụng thực tế)**: Điểm trung bình = `3.33` / 5.0
 
 ### Ma trận Tương quan UTAUT (UTAUT Correlation Matrix)
-- Mối liên hệ **Self-efficacy → Use Behavior**: Hệ số tương quan Pearson `r = 0.761` (p < 0.001). Cảm xúc tự tin về DevOps ảnh hưởng cực mạnh đến hành vi áp dụng thực tế.
-- Mối liên hệ **Social Influence → Intention**: Hệ số tương quan Pearson `r = 0.730` (p < 0.001). Áp lực đồng nghiệp và mentor thúc đẩy mạnh mẽ ý định học tập DevOps.
-- Mối liên hệ **Facilitating Conditions → Use Behavior**: Hệ số tương quan Pearson `r = 0.769` (p < 0.001).
+- Mối liên hệ **Self-efficacy → Use Behavior**: Hệ số tương quan Pearson `r = 0.611` (p < 0.001). Cảm xúc tự tin về DevOps ảnh hưởng cực mạnh đến hành vi áp dụng thực tế.
+- Mối liên hệ **Social Influence → Intention**: Hệ số tương quan Pearson `r = 0.521` (p < 0.001). Áp lực đồng nghiệp và mentor thúc đẩy mạnh mẽ ý định học tập DevOps.
+- Mối liên hệ **Facilitating Conditions → Use Behavior**: Hệ số tương quan Pearson `r = 0.610` (p < 0.001).
 
 ### Khoảng cách Ý định - Hành vi (Intention-Action Gap) (Hướng 14)
-- **Khoảng cách trung bình (Gap)**: `0.30` điểm Likert.
+- **Khoảng cách trung bình (Gap)**: `0.41` điểm Likert.
 - Sinh viên có mong muốn và ý định học tập/áp dụng CI/CD cao hơn mức độ sử dụng thực tế rất nhiều. Điều này chứng tỏ tồn tại một "khoảng trống" lớn về khả năng tiếp cận và thực thi thực tế (Doing), cần các giải pháp hỗ trợ hạ tầng từ phía nhà trường.
 
 ---

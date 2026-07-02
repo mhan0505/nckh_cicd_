@@ -1,0 +1,125 @@
+=== CI/CD Survey Stats Verification ===
+Total Rows (N): 156
+
+Q5 Awareness Value Counts:
+  - Có nghe qua nhưng chưa hiểu rõ: 76 (48.72%)
+  - Chưa bao giờ nghe: 50 (32.05%)
+  - Biết khái niệm cơ bản: 27 (17.31%)
+  - Hiểu rõ và có thể giải thích cho người khác: 2 (1.28%)
+  - Không trả lời: 1 (0.64%)
+
+All Columns:
+  0: timestamp
+  1: Q1_university
+  2: Q2_year
+  3: Q3_major
+  4: Q4_product_field
+  5: Q5_cicd_awareness
+  6: Q6_automation_level
+  7: Q7_tools_used
+  8: Q8_learning_source
+  9: Q9_usage_purpose
+  10: Q10_cicd_benefits
+  11: Q11_deploy_frequency
+  12: Q12_lead_time
+  13: Q13_recovery_time
+  14: Q14_failure_rate
+  15: Q15_save_time
+  16: Q16_early_bug_detect
+  17: Q17_job_confidence
+  18: Q18_ease_of_learning
+  19: Q19_self_study
+  20: Q20_setup_ability
+  21: Q21_peer_influence
+  22: Q22_mentor_influence
+  23: Q23_industry_standard
+  24: Q24_curriculum_readiness
+  25: Q25_free_tools_sufficient
+  26: Q26_support_access
+  27: Q27_intent_to_adopt
+  28: Q28_self_learn_plan
+  29: Q29_prefer_cicd_projects
+  30: Q30_actual_usage
+  31: Q31_regular_usage
+  32: Q32_proactive_setup
+  33: Q33_cicd_difficulties
+  34: Q34_adoption_barriers
+  35: Q35_improvement_suggestions
+  36: Q36_university_suggestions
+  37: Q37_skills_needed
+  38: Q38_future_plan
+  39: Q39_biggest_barrier
+  40: Q40_expected_benefit
+  41: Q4_product_field__Phần mềm ứng dụng (Web, Mobile, Desktop App)
+  42: Q4_product_field__Hệ thống AI/Big Data/Data Science
+  43: Q4_product_field__Hệ thống nhúng (Embedded)/IoT
+  44: Q4_product_field__Giải pháp hạ tầng & Bảo mật
+  45: Q4_product_field__Bay
+  46: Q4_product_field__Network
+  47: Q4_product_field__Game
+  48: Q4_product_field__Dữ liệu
+  49: Q7_tools_used__Jenkins
+  50: Q7_tools_used__GitLab CI/CD
+  51: Q7_tools_used__GitHub Actions
+  52: Q7_tools_used__Circle CI
+  53: Q7_tools_used__Travis CI
+  54: Q7_tools_used__Chưa từng sử dụng công cụ CI/CD nào
+  55: Q9_usage_purpose__Build / Tự động hoá quá trình build
+  56: Q9_usage_purpose__Continuous Integration (CI) – tích hợp & kiểm tra mã nguồn tự động
+  57: Q9_usage_purpose__Continuous Deployment / Delivery (CD) – triển khai tự động
+  58: Q9_usage_purpose__Automated Testing – kiểm thử tự động
+  59: Q9_usage_purpose__Tự động hoá quy trình phát triển (workflow automation)
+  60: Q9_usage_purpose__Học tập / nghiên cứu / thử nghiệm cá nhân
+  61: Q9_usage_purpose__Chưa từng sử dụng
+  62: Q10_cicd_benefits__Tự động hóa quy trình build và test
+  63: Q10_cicd_benefits__Phát hiện lỗi sớm hơn
+  64: Q10_cicd_benefits__Tăng tốc độ phát triển phần mềm
+  65: Q10_cicd_benefits__Hỗ trợ làm việc nhóm tốt hơn
+  66: Q10_cicd_benefits__Giảm lỗi khi triển khai phần mềm
+  67: Q33_cicd_difficulties__Tích hợp liên tục (CI - Integration)
+  68: Q33_cicd_difficulties__Xây dựng (Build)
+  69: Q33_cicd_difficulties__Kiểm thử tự động (Automated Testing)
+  70: Q33_cicd_difficulties__Phân phối liên tục (CD - Delivery)
+  71: Q33_cicd_difficulties__Triển khai liên tục (CD - Deployment)
+  72: Q33_cicd_difficulties__Giám sát & Phản hồi
+  73: Q33_cicd_difficulties__Not enough experience to determine
+  74: Q34_adoption_barriers__Thiếu kiến thức hoặc kỹ năng về DevOps/CI/CD
+  75: Q34_adoption_barriers__Thiếu tài liệu hoặc hướng dẫn thực hành rõ ràng
+  76: Q34_adoption_barriers__Việc thiết lập và cấu hình công cụ CI/CD khá phức tạp
+  77: Q34_adoption_barriers__Thiếu môi trường thực hành (server, cloud, Docker, v.v.)
+  78: Q34_adoption_barriers__Ít cơ hội áp dụng CI/CD trong các môn học tại trường
+  79: Q34_adoption_barriers__Chưa hiểu rõ lợi ích thực tế khi triển khai CI/CD
+  80: Q34_adoption_barriers__Projects too small scale to benefit from CI/CD
+  81: Q39_biggest_barrier__Thiếu kiến thức hoặc kỹ năng về CI/CD và DevOps
+  82: Q39_biggest_barrier__Khó thiết lập và cấu hình các công cụ CI/CD
+  83: Q39_biggest_barrier__Thiếu môi trường thực hành (server, cloud, Docker, v.v.)
+  84: Q39_biggest_barrier__Ít cơ hội thực hành CI/CD trong các môn học tại trường
+  85: Q39_biggest_barrier__Dự án học tập còn đơn giản nên chưa thấy cần CI/CD
+  86: Q39_biggest_barrier__Khó phối hợp làm việc nhóm khi áp dụng CI/CD
+  87: Q39_biggest_barrier__iu
+  88: Q40_expected_benefit__Giảm bớt các công việc thủ công lặp đi lặp lại (build, test, deploy)
+  89: Q40_expected_benefit__Phát hiện lỗi sớm hơn trong quá trình phát triển phần mềm.
+  90: Q40_expected_benefit__Tăng tốc độ phát triển và cập nhật dự án.
+  91: Q40_expected_benefit__Nâng cao kỹ năng DevOps và kinh nghiệm thực tế cho sinh viên.
+  92: Q40_expected_benefit__Không biết
+
+Low awareness count (Chưa nghe + Có nghe qua nhưng chưa hiểu rõ): 126 (80.77%)
+FC-Use Correlation: N_corr=106, r = 0.7759, p = 1.5666e-22
+
+Q6 Automation Level Value Counts:
+  - Không trả lời: 50 (32.05%)
+  - Tự động hóa một phần nhỏ (ví dụ: chỉ tự động Build): 42 (26.92%)
+  - Tự động hóa trung bình (ví dụ: Build và Test tự động cơ bản): 27 (17.31%)
+  - Hoàn toàn thủ công: 26 (16.67%)
+  - Tự động hóa cao (ví dụ: đã có Pipeline tích hợp hầu hết các bước): 6 (3.85%)
+  - Tự động hóa hoàn toàn (CI/CD khép kín, tối ưu): 5 (3.21%)
+
+=== Verifying Statement 2 ===
+Active Users (N): 67
+Active Users Q5 Distribution:
+  - Có nghe qua nhưng chưa hiểu rõ: 45 (67.16%)
+  - Biết khái niệm cơ bản: 19 (28.36%)
+  - Hiểu rõ và có thể giải thích cho người khác: 2 (2.99%)
+  - Không trả lời: 1 (1.49%)
+Matching low awareness categories among active: ['Có nghe qua nhưng chưa hiểu rõ', 'Chưa bao giờ nghe']
+Active users with low awareness: 45 (67.16%)

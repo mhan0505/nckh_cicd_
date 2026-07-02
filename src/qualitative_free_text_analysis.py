@@ -26,7 +26,7 @@ if sys.platform == "win32" and hasattr(sys.stdout, "reconfigure"):
     sys.stderr.reconfigure(encoding="utf-8", errors="replace")
 
 INPUT_FILE = Path("processed/tagged_free_text.csv")
-FIGURE_DIR = Path("reports/figures/2_multiple_answers_freetext")
+FIGURE_DIR = Path("reports/figures/2b_freetext")
 OUTPUT_DIR = Path("reports/free_text")
 FIGURE_DIR.mkdir(parents=True, exist_ok=True)
 OUTPUT_DIR.mkdir(parents=True, exist_ok=True)

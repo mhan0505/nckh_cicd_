@@ -75,7 +75,8 @@ PIPELINE = [
         ],
         "expected_outputs": [
             "reports/figures/1_demographics_descriptive/",
-            "reports/figures/2_multiple_answers_freetext/",
+            "reports/figures/2a_multiple_choice/",
+            "reports/figures/2b_freetext/",
             "reports/figures/3_advanced_grouping_correlation/",
             "reports/free_text/",
         ],

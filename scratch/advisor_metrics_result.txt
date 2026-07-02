@@ -1,0 +1,51 @@
+=== CI/CD SURVEY SURVEY METRICS FOR ADVISOR ===
+
+--- Q5 Awareness ---
+  Có nghe qua nhưng chưa hiểu rõ: 76 (48.7%)
+  Chưa bao giờ nghe: 50 (32.1%)
+  Biết khái niệm cơ bản: 27 (17.3%)
+  Hiểu rõ và có thể giải thích cho người khác: 2 (1.3%)
+  Không trả lời: 1 (0.6%)
+
+--- Usage (has_used_cicd) ---
+  Chưa dùng: 89 (57.1%)
+  Đã dùng: 67 (42.9%)
+
+--- Active Users (N = 67) ---
+
+Learning Source (Q8):
+
+Tools used (Q7):
+  Jenkins: 9 (13.4%)
+  GitLab CI/CD: 23 (34.3%)
+  GitHub Actions: 48 (71.6%)
+  Circle CI: 6 (9.0%)
+  Travis CI: 4 (6.0%)
+  Chưa từng sử dụng công cụ CI/CD nào: 0 (0.0%)
+
+Automation level (Q6) for active users:
+  Tự động hóa một phần nhỏ (ví dụ: chỉ tự động Build): 25 (37.3%)
+  Tự động hóa trung bình (ví dụ: Build và Test tự động cơ bản): 22 (32.8%)
+  Hoàn toàn thủ công: 10 (14.9%)
+  Tự động hóa cao (ví dụ: đã có Pipeline tích hợp hầu hết các bước): 6 (9.0%)
+  Tự động hóa hoàn toàn (CI/CD khép kín, tối ưu): 4 (6.0%)
+
+--- Know but not use (N = 8) ---
+
+Biggest barriers for them (Q39):
+  Thiếu kiến thức hoặc kỹ năng về CI/CD và DevOps: 0 (0.0%)
+  Khó thiết lập và cấu hình các công cụ CI/CD: 0 (0.0%)
+  Thiếu môi trường thực hành (server, cloud, Docker, v.v.): 0 (0.0%)
+  Ít cơ hội thực hành CI/CD trong các môn học tại trường: 0 (0.0%)
+  Dự án học tập còn đơn giản nên chưa thấy cần CI/CD: 0 (0.0%)
+  Khó phối hợp làm việc nhóm khi áp dụng CI/CD: 0 (0.0%)
+  iu: 0 (0.0%)
+
+Other barriers (Q34) for them:
+  Thiếu kiến thức hoặc kỹ năng về DevOps/CI/CD: 5 (62.5%)
+  Thiếu tài liệu hoặc hướng dẫn thực hành rõ ràng: 3 (37.5%)
+  Việc thiết lập và cấu hình công cụ CI/CD khá phức tạp: 4 (50.0%)
+  Thiếu môi trường thực hành (server, cloud, Docker, v.v.): 3 (37.5%)
+  Ít cơ hội áp dụng CI/CD trong các môn học tại trường: 3 (37.5%)
+  Chưa hiểu rõ lợi ích thực tế khi triển khai CI/CD: 3 (37.5%)
+  Projects too small scale to benefit from CI/CD: 0 (0.0%)

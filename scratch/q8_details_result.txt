@@ -1,0 +1,30 @@
+=== Q8 DETAILS AND CROSS TAB ===
+
+Q8 columns:
+['Q8_learning_source']
+
+Cross tab of Q5 Awareness vs has_used_cicd:
+has_used_cicd                                 0   1
+Q5_cicd_awareness                                  
+Biết khái niệm cơ bản                         8  19
+Chưa bao giờ nghe                            50   0
+Có nghe qua nhưng chưa hiểu rõ               31  45
+Hiểu rõ và có thể giải thích cho người khác   0   2
+Không trả lời                                 0   1
+
+Active users (N = 67) value counts for Q8:
+Q8_learning_source
+Dự án cá nhân / Đồ án môn học               21
+Tự tìm hiểu qua tài liệu trên Internet      19
+Môn học tại trường đại học                  13
+Thực tập tại doanh nghiệp                    8
+Khóa học online (Coursera, YouTube, ...)     5
+Không trả lời                                1
+
+Active users Q8 dummy columns:
+
+Original Q8 unique values:
+['Môn học tại trường đại học' 'Thực tập tại doanh nghiệp'
+ 'Khóa học online (Coursera, YouTube, ...)'
+ 'Tự tìm hiểu qua tài liệu trên Internet' 'Không trả lời'
+ 'Dự án cá nhân / Đồ án môn học']

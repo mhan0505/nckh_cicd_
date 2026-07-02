@@ -418,7 +418,7 @@ def generate_html():
                         <div class="col-md-6">
                             <div class="chart-container text-center">
                                 <h5 class="fw-semibold">Biểu đồ Pareto: Khó khăn lớn nhất trong quy trình</h5>
-                                <img src="reports/figures/2_multiple_answers_freetext/Q33_cicd_difficulties_pareto.png" class="chart-img" alt="Q33 Pareto">
+                                <img src="reports/figures/2a_multiple_choice/Q33_cicd_difficulties_pareto.png" class="chart-img" alt="Q33 Pareto">
                             </div>
                             <div class="chart-container text-center">
                                 <h5 class="fw-semibold">So sánh Rào cản theo mức Nhận biết (Nhận thức Thấp vs Cao)</h5>
@@ -428,7 +428,7 @@ def generate_html():
                         <div class="col-md-6">
                             <div class="chart-container text-center">
                                 <h5 class="fw-semibold">Biểu đồ Pareto: Rào cản chấp nhận CI/CD</h5>
-                                <img src="reports/figures/2_multiple_answers_freetext/Q34_adoption_barriers_pareto.png" class="chart-img" alt="Q34 Pareto">
+                                <img src="reports/figures/2a_multiple_choice/Q34_adoption_barriers_pareto.png" class="chart-img" alt="Q34 Pareto">
                             </div>
                             <div class="chart-container text-center">
                                 <h5 class="fw-semibold">Bản đồ nhiệt: Rào cản áp dụng theo Năm học</h5>
@@ -446,13 +446,13 @@ def generate_html():
                         <div class="col-md-6">
                             <div class="chart-container text-center">
                                 <h5 class="fw-semibold">Phân bố chủ đề phản hồi mở tổng thể</h5>
-                                <img src="reports/figures/2_multiple_answers_freetext/freetext_theme_overall.png" class="chart-img" alt="Free Text Theme Overall">
+                                <img src="reports/figures/2b_freetext/freetext_theme_overall.png" class="chart-img" alt="Free Text Theme Overall">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="chart-container text-center">
                                 <h5 class="fw-semibold">Chủ đề phản hồi mở phân theo Nhóm câu hỏi</h5>
-                                <img src="reports/figures/2_multiple_answers_freetext/freetext_theme_by_question_group.png" class="chart-img" alt="Free Text Theme Groups">
+                                <img src="reports/figures/2b_freetext/freetext_theme_by_question_group.png" class="chart-img" alt="Free Text Theme Groups">
                             </div>
                         </div>
                     </div>
