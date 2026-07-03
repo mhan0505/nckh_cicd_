@@ -144,7 +144,7 @@ sns.barplot(x=dora_counts.index, y=dora_counts.values, palette=COLORS_DORA, ax=a
 for i, val in enumerate(dora_counts.values):
     pct = val / N * 100
     axes[0].text(i, val + 1, f"{int(val)} ({pct:.1f}%)", ha="center", fontweight="bold", fontsize=9)
-axes[0].set_title("a) Phân loại Năng lực DevOps (Toàn bộ mẫu, N = 151)", fontsize=11, fontweight="bold", pad=10)
+axes[0].set_title(f"a) Phân loại Năng lực DevOps (Toàn bộ mẫu, N = {N})", fontsize=11, fontweight="bold", pad=10)
 axes[0].set_ylabel("Số lượng sinh viên")
 
 # b) Phân bố Sử dụng CI/CD theo Lớp Performer DORA
@@ -290,7 +290,7 @@ for bar in bars:
     ax.text(bar.get_x() + bar.get_width()/2, val + 2, f"{int(val)} SV\n({pct:.1f}%)", ha="center", fontweight="bold", fontsize=9)
 ax.set_ylabel("Số lượng sinh viên")
 ax.set_ylim(0, N * 1.1)
-ax.set_title("Khoảng cách giữa Nhận biết và Hành động (Knowing-Doing Gap)\ntrong áp dụng CI/CD của sinh viên (N = 151)", fontsize=11, fontweight="bold", pad=12)
+ax.set_title(f"Khoảng cách giữa Nhận biết và Hành động (Knowing-Doing Gap)\ntrong áp dụng CI/CD của sinh viên (N = {N})", fontsize=11, fontweight="bold", pad=12)
 plt.tight_layout()
 plt.savefig(OUTPUT_DIR / "adv_h6a_knowing_doing_gap.png", dpi=150)
 plt.close()
@@ -658,7 +658,7 @@ if diff_cols:
         pct = val / N * 100
         ax.text(bar.get_x() + bar.get_width()/2, val + 1, f"{int(val)} ({pct:.1f}%)", ha="center", fontweight="bold", fontsize=9)
     ax.set_ylabel("Số lượng sinh viên gặp khó khăn")
-    ax.set_title("Giai đoạn khó khăn nhất trong quy trình CI/CD của sinh viên (N = 151)", fontsize=11, fontweight="bold", pad=12)
+    ax.set_title(f"Giai đoạn khó khăn nhất trong quy trình CI/CD của sinh viên (N = {N})", fontsize=11, fontweight="bold", pad=12)
     plt.tight_layout()
     plt.savefig(OUTPUT_DIR / "adv_h17_difficulty_by_automation.png", dpi=150)
     plt.close()
