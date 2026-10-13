@@ -5,9 +5,9 @@ Báo cáo này chứa các thống kê chéo nâng cao, phân tích tương quan
 ---
 
 ##  Phân loại Sử dụng CI/CD (Adoption Stats)
-- **Tổng mẫu nghiên cứu**: 148 sinh viên
-- **Nhóm đã thực tế sử dụng CI/CD**: 61 (41.2%)
-- **Nhóm chưa từng dùng công cụ CI/CD**: 87 (58.8%)
+- **Tổng mẫu nghiên cứu**: 149 sinh viên
+- **Nhóm đã thực tế sử dụng CI/CD**: 61 (40.9%)
+- **Nhóm chưa từng dùng công cụ CI/CD**: 88 (59.1%)
 
 ---
 
@@ -15,15 +15,15 @@ Báo cáo này chứa các thống kê chéo nâng cao, phân tích tương quan
 
 ### Phân loại Năng lực DevOps (DORA Performance Classification)
 Dựa trên mức điểm trung bình từ 4 chỉ số DORA tiêu chuẩn (Deployment Frequency, Lead Time, Mean Time to Recovery, Change Failure Rate):
-- **Elite Performer**: 16 sinh viên (10.8%)
-- **High Performer**: 44 sinh viên (29.7%)
-- **Medium Performer**: 31 sinh viên (20.9%)
-- **Low Performer**: 57 sinh viên (38.5%)
+- **Elite Performer**: 16 sinh viên (10.7%)
+- **High Performer**: 44 sinh viên (29.5%)
+- **Medium Performer**: 31 sinh viên (20.8%)
+- **Low Performer**: 58 sinh viên (38.9%)
 
 ### Kiểm định giả thuyết CI/CD và Hiệu suất DevOps (Hướng 2)
 - **Giả thuyết khoa học**: Áp dụng công cụ CI/CD làm tăng đáng kể năng lực DevOps tổng thể của sinh viên.
 - **Kết quả T-test độc lập**:
-  - Giá trị t-statistic: `10.2318`
+  - Giá trị t-statistic: `10.3369`
   - p-value: `0.000000`
 - **Kết luận**: p-value cực nhỏ (< 0.001) cho thấy sự khác biệt về năng lực DORA giữa nhóm sử dụng CI/CD và nhóm không sử dụng là **cực kỳ có ý nghĩa thống kê**. Việc áp dụng CI/CD thực sự cải thiện năng lực phân phối phần mềm của sinh viên.
 
